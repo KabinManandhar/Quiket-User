@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import '../../blocs/postBlocs/credentials/credentialBloc.dart';
 import '../../control/routes.dart';
-import 'package:testawwpp/control/style.dart';
-import 'package:testawwpp/resources/requests.dart';
-import 'package:testawwpp/resources/secureStorage.dart';
+import '../../control/style.dart';
 
 class MenuScreen extends StatelessWidget {
   final int eventId;
@@ -89,16 +85,50 @@ class MenuScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ListTile(
+              leading: Icon(SimpleLineIcons.user),
+              onTap: () {
+                Navigator.pushNamed(context, profileRoute);
+              },
+              title: Text(
+                'Profile',
+                style: labelTextStyle,
+              ),
+              subtitle: Text(
+                'View/Make changes to your Profile.',
+                style: labelTextSmallStyle,
+              ),
+            ),
+            Divider(
+              height: 30,
+            ),
+            ListTile(
               leading: Icon(SimpleLineIcons.pencil),
               onTap: () {
                 Navigator.pushNamed(context, '/editEvent/$eventId');
               },
               title: Text(
-                'Edit Event',
+                'Feedback',
                 style: labelTextStyle,
               ),
               subtitle: Text(
-                'Make changes to your event.',
+                'Give us feedbacks.',
+                style: labelTextSmallStyle,
+              ),
+            ),
+            Divider(
+              height: 30,
+            ),
+            ListTile(
+              leading: Icon(SimpleLineIcons.pencil),
+              onTap: () {
+                Navigator.pushNamed(context, '/editEvent/$eventId');
+              },
+              title: Text(
+                'Report',
+                style: labelTextStyle,
+              ),
+              subtitle: Text(
+                'Report your issues.',
                 style: labelTextSmallStyle,
               ),
             ),

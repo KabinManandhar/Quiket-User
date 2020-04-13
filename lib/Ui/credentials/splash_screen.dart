@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../control/routes.dart';
-import '../../resources/secureStorage.dart';
 
 class SplashScreenQuiket extends StatefulWidget {
   @override
@@ -16,7 +15,7 @@ class _SplashScreenQuiketState extends State<SplashScreenQuiket> {
   void initState() {
     super.initState();
 
-    secureStorage.deleteAll();
+    // secureStorage.deleteAll();
 
     Timer(Duration(seconds: 1), () async {
       Navigator.pushReplacementNamed(context, navigationRoute);

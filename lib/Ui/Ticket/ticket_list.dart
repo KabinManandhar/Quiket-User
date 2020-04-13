@@ -140,11 +140,6 @@ class _TicketListState extends State<TicketList> {
                           : SoftText(
                               label: 'Buy',
                               onClick: () async {
-                                // String _valueOfId =
-                                //     await secureStorage.read(key: 'id');
-                                // String _token =
-                                //     await secureStorage.read(key: 'token');
-                                // int _id = int.parse(_valueOfId);
                                 for (int i = 1;
                                     i <= widget._value.toInt();
                                     i++) {

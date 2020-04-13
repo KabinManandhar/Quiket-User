@@ -8,19 +8,22 @@ class OrderModel {
   String updatedAt;
   String userName;
   String ticketName;
+  String eventName;
   int eventId;
 
-  OrderModel(
-      {this.id,
-      this.ticketId,
-      this.userId,
-      this.eventId,
-      this.status,
-      this.qrCode,
-      this.createdAt,
-      this.updatedAt,
-      this.userName,
-      this.ticketName});
+  OrderModel({
+    this.id,
+    this.ticketId,
+    this.userId,
+    this.eventId,
+    this.status,
+    this.qrCode,
+    this.createdAt,
+    this.updatedAt,
+    this.userName,
+    this.ticketName,
+    this.eventName,
+  });
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -33,6 +36,7 @@ class OrderModel {
     updatedAt = json['updated_at'];
     userName = json['User Name'];
     ticketName = json['Ticket Name'];
+    eventName = json['Event Name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +51,7 @@ class OrderModel {
     data['updated_at'] = this.updatedAt;
     data['User Name'] = this.userName;
     data['Ticket Name'] = this.ticketName;
+    data['Event Name'] = this.eventName;
     return data;
   }
 }

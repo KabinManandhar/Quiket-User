@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:testawwpp/resources/requests.dart';
+import 'package:testawwpp/resources/secureStorage.dart';
 
 import '../../control/style.dart';
 import '../../models/event_model.dart';
@@ -38,7 +42,7 @@ class _ShowEventState extends State<ShowEvent> {
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              actions: <Widget>[bookmark()],
+              actions: <Widget>[bookmark(context)],
               elevation: 0,
               expandedHeight: 300.0,
               floating: true,
@@ -114,7 +118,10 @@ class _ShowEventState extends State<ShowEvent> {
                             'Event Details',
                             style: labelTextStyle,
                           ),
-                          description(eventData.description)
+                          description(eventData.description),
+                          SizedBox(
+                            height: 50,
+                          )
                         ],
                       );
                     },
@@ -143,7 +150,10 @@ class _ShowEventState extends State<ShowEvent> {
               fit: BoxFit.cover,
             ) ==
             null
-        ? SoftContainer()
+        ? Icon(
+            MaterialIcons.event,
+            size: 70,
+          )
         : Image.network(
             "http://192.168.100.70:8000" + picture,
             fit: BoxFit.cover,
@@ -168,7 +178,7 @@ class _ShowEventState extends State<ShowEvent> {
     );
   }
 
-  Widget bookmark() {
+  Widget bookmark(contexta) {
     return FlatButton(
       child: pressed
           ? Icon(
@@ -179,7 +189,20 @@ class _ShowEventState extends State<ShowEvent> {
               MaterialIcons.bookmark,
               size: buttonSize,
             ),
-      onPressed: () {
+      onPressed: () async {
+        String _valueOfId = await secureStorage.read(key: 'id');
+        String _token = await secureStorage.read(key: 'token');
+        int _id = int.parse(_valueOfId);
+        if (pressed) {
+          Map<String, dynamic> data = {
+            'user_id': _id,
+            'event_id': widget.eventId
+          };
+          req.authPostRequest(data, '/users/$_id/bookmark', _token);
+        } else {
+          req.delRequest('/users/$_id/bookmark', _token);
+        }
+
         setState(() {
           pressed = !pressed;
         });
@@ -232,7 +255,7 @@ class _ShowEventState extends State<ShowEvent> {
         Align(
           alignment: Alignment.bottomLeft,
           child: SoftText(
-            label: 'Add to Calander',
+            label: 'Add to Calandar',
             fontSize: 20,
             onClick: () {
               final Event event = Event(

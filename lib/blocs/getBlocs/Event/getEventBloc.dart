@@ -25,6 +25,13 @@ class GetEventBloc {
     }
   }
 
+  getBookmarkIds(int id) async {
+    List<int> ids = await _eventProvider.getBookmarkId(id);
+    if (ids != null) {
+      _eventIds.sink.add(ids);
+    }
+  }
+
   _eventTransformer() {
     return ScanStreamTransformer(
         (Map<int, Future<EventModel>> event, int id, index) {

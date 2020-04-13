@@ -19,8 +19,8 @@ class GetOrderBloc {
     _ordersFetcher.stream.transform(_orderTransformer()).pipe(_ordersOutput);
   }
 
-  getIds(int id) async {
-    List<int> ids = await _orderProvider.getOrdersId(id);
+  getOdrIds(int id, String token) async {
+    List<int> ids = await _orderProvider.getOrdersId(id, token);
     if (ids != null) {
       _orderIds.sink.add(ids);
     }

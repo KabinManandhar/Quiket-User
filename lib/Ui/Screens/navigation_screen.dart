@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:testawwpp/Ui/credentials/login_screen.dart';
+import 'package:testawwpp/blocs/getBlocs/Order/getOrderBlocProvider.dart';
 import 'package:testawwpp/resources/secureStorage.dart';
 
 import '../../blocs/getBlocs/Event/getEventBlocProvider.dart';
@@ -29,8 +30,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int _screen = 2;
   Widget build(BuildContext context) {
     final bloc = GetEventBlocProvider.of(context);
+    final orderBloc = GetOrderBlocProvider.of(context);
     return Scaffold(
-      body: changeScreen(bloc, _screen),
+      body: changeScreen(bloc, orderBloc, _screen),
       bottomNavigationBar: CurvedNavigationBar(
         index: 2,
         height: 70,
@@ -56,13 +58,14 @@ class _NavigationScreenState extends State<NavigationScreen> {
     );
   }
 
-  Widget changeScreen(bloc, int screen) {
+  Widget changeScreen(GetEventBloc bloc, GetOrderBloc orderBloc, int screen) {
     if (screen == 0) {
       return SearchScreen();
     } else if (screen == 1) {
       if (widget._token == null && widget._id == null) {
         return LoginScreen();
       } else {
+        orderBloc.getOdrIds(widget._id, widget._token);
         return TicketScreen();
       }
     } else if (screen == 2) {
@@ -72,6 +75,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       if (widget._token == null && widget._id == null) {
         return LoginScreen();
       } else {
+        bloc.getBookmarkIds(widget._id);
         return BookmarkScreen();
       }
     } else if (screen == 4) {
@@ -88,7 +92,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
   getIdToken() async {
     String _valueOfId = await secureStorage.read(key: 'id');
     String _token = await secureStorage.read(key: 'token');
-    int _id = int.parse(_valueOfId);
+    int _id;
+    if (_valueOfId != "" && _valueOfId != null) {
+      _id = int.parse(_valueOfId);
+    }
     setState(() {
       widget._id = _id;
       widget._token = _token;

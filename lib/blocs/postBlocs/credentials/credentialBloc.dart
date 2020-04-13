@@ -39,6 +39,7 @@ class CredentialsBloc extends Object with Validators {
     String validPassword = _password.value;
     var jsonResponse = await _auth.login(validEmail, validPassword);
     var results = json.decode(jsonResponse);
+    print(results);
 
     if (results['success']) {
       secureStorage.deleteAll();
@@ -47,7 +48,6 @@ class CredentialsBloc extends Object with Validators {
 
       return true;
     }
-
     return false;
   }
 

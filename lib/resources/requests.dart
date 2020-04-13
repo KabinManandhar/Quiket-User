@@ -44,6 +44,7 @@ class Requests {
   authGetRequest(apiUrl, token) async {
     try {
       final fullUrl = _url + apiUrl;
+      print(fullUrl);
       final http.Response response =
           await http.get(fullUrl, headers: _setAuthHeaders(token));
       return response;

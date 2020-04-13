@@ -5,15 +5,14 @@ import 'requests.dart';
 import 'secureStorage.dart';
 
 class OrderApiProvider {
-  final _rootUrl = '/events';
+  final _rootUrl = '/users';
   final _ordUrl = '/orders';
   String _token;
 
-  Future<List<int>> getOrdersId(int id) async {
+  Future<List<int>> getOrdersId(int id, String token) async {
     try {
-      _token = await secureStorage.read(key: 'token');
       final response =
-          await req.authGetRequest(_rootUrl + "/$id" + _ordUrl, _token);
+          await req.authGetRequest(_rootUrl + "/$id" + _ordUrl, token);
       final ids = json.decode(response.body);
 
       return ids.cast<int>();
@@ -26,8 +25,12 @@ class OrderApiProvider {
   Future<OrderModel> getOrder(int id) async {
     try {
       _token = await secureStorage.read(key: 'token');
-      final response = await req.authGetRequest(_ordUrl + '/$id', _token);
+
+      final response =
+          await req.authGetRequest(_rootUrl + _ordUrl + '/$id', _token);
       final order = json.decode(response.body);
+      print(order);
+
       return OrderModel.fromJson(order[0]);
     } catch (e) {
       print(e);

@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                 passwordField(bloc),
                 Container(height: 20),
                 loginButton(bloc),
-                Container(height: MediaQuery.of(context).size.height - 750),
+                Container(height: MediaQuery.of(context).size.height - 650),
                 signUp(bloc, context),
                 Container(height: 20)
               ],
