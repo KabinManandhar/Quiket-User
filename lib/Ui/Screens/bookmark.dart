@@ -9,7 +9,7 @@ class BookmarkScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(60),
         child: AppBar(
           title: Text(
-            'Explore',
+            'Bookmarks',
           ),
           elevation: 0,
         ),

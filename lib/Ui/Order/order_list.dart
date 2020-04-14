@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:testawwpp/widgets/loadingTicketContainer.dart';
 
 import '../../blocs/getBlocs/Order/getOrderBlocProvider.dart';
 import '../../control/style.dart';
 import '../../models/order_model.dart';
+import '../../widgets/loadingTicketContainer.dart';
+import '../../widgets/softText.dart';
 
 class OrderList extends StatefulWidget {
   final int orderId;
@@ -97,6 +97,11 @@ class _OrderListState extends State<OrderList> {
               embeddedImageStyle: QrEmbeddedImageStyle(
                 size: Size(150, 150),
               ),
+            ),
+            SoftText(
+              label: "Go to Event",
+              onClick: () =>
+                  Navigator.pushNamed(context, '/showEvent/${order.eventId}'),
             )
           ],
         ),
@@ -104,31 +109,3 @@ class _OrderListState extends State<OrderList> {
     );
   }
 }
-// ListTile(
-//           onTap: () async {
-//             // String token = await secureStorage.read(key: 'token');
-//             // int stat = order.status;
-//             // int value;
-//             // if (stat == 0) {
-//             //   value = 1;
-//             // } else {
-//             //   value = 0;
-//             // }
-//             // Map<String, dynamic> data = {'status': value};
-
-//             // await req.putRequest(data, '/orders/${order.id}', token);
-//           },
-//           title: Text(
-//             order.eventName,
-//             style: labelTextStyle,
-//           ),
-//           subtitle: Text(order.ticketName),
-//           trailing: Container(
-//             height: 10,
-//             width: 10,
-//             decoration: BoxDecoration(
-//               color: order.status == 0 ? Colors.green : Colors.grey,
-//               borderRadius: BorderRadius.circular(12),
-//             ),
-//           ),
-//         ),

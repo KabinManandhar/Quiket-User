@@ -160,28 +160,6 @@ class _TicketListState extends State<TicketList> {
                                 }
 
                                 if (widget.result) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          backgroundColor: Colors.grey[300],
-                                          title: Text(
-                                            "Successfully Purchased the Ticket! Enjoy your Show!",
-                                            style: labelTextSmallStyle,
-                                          ),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text(
-                                                'Thanks!',
-                                                style: labelTextSmallStyle,
-                                              ),
-                                            )
-                                          ],
-                                        );
-                                      });
                                 } else {
                                   showDialog(
                                       context: context,

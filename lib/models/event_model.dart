@@ -10,6 +10,7 @@ class EventModel {
   String startDatetime;
   String endDatetime;
   int organizerId;
+  String organizerName;
 
   EventModel({
     this.id,
@@ -23,6 +24,7 @@ class EventModel {
     this.startDatetime,
     this.endDatetime,
     this.organizerId,
+    this.organizerName,
   });
 
   EventModel.fromJson(Map<String, dynamic> json) {
@@ -37,6 +39,7 @@ class EventModel {
     startDatetime = json['start_datetime'];
     endDatetime = json['end_datetime'];
     organizerId = json['organizer_id'];
+    organizerName = json['organizer_name'];
   }
 
   Map<String, dynamic> toMap() {
@@ -50,24 +53,9 @@ class EventModel {
     data['start_datetime'] = this.startDatetime;
     data['end_datetime'] = this.endDatetime;
     data['organizer_id'] = this.organizerId;
+    data['organizer_name'] = this.organizerName;
     data['picture'] = this.picture;
 
     return data;
   }
-
-  // sDateCon() {
-  //   if (this.startDatetime != null) {
-  //     var splitVal = this.startDatetime.split(" ");
-  //     this.sDate = splitVal[0];
-  //     this.sTime = splitVal[1];
-  //   }
-  // }
-
-  // eDateCon() {
-  //   if (this.endDatetime != null) {
-  //     var splitVal = this.endDatetime.split(" ");
-  //     this.eDate = splitVal[0];
-  //     this.eTime = splitVal[1];
-  //   }
-  // }
 }

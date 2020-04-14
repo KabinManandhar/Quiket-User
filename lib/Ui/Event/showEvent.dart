@@ -5,24 +5,19 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:testawwpp/resources/requests.dart';
-import 'package:testawwpp/resources/secureStorage.dart';
 
 import '../../control/style.dart';
 import '../../models/event_model.dart';
-import '../../models/organizer_model.dart';
 import '../../resources/EventApiProvider.dart';
-import '../../resources/authProvider.dart';
+import '../../resources/requests.dart';
+import '../../resources/secureStorage.dart';
 import '../../widgets/loadingContainer.dart';
 import '../../widgets/loadingTicketContainer.dart';
 import '../../widgets/softButton.dart';
-import '../../widgets/softContainer.dart';
 import '../../widgets/softText.dart';
 
 class ShowEvent extends StatefulWidget {
   final eventId;
-  final _auth = AuthProvider();
 
   ShowEvent({Key key, this.eventId}) : super(key: key);
   @override
@@ -68,7 +63,15 @@ class _ShowEventState extends State<ShowEvent> {
                     future: EventApiProvider().getEvent(widget.eventId),
                     builder: (context, AsyncSnapshot<EventModel> snapshot) {
                       if (!snapshot.hasData) {
-                        return LoadingTicketContainer();
+                        return Column(
+                          children: <Widget>[
+                            LoadingTicketContainer(),
+                            LoadingTicketContainer(),
+                            LoadingContainer(),
+                            LoadingContainer(),
+                            LoadingContainer(),
+                          ],
+                        );
                       }
                       var eventData = snapshot.data;
                       return Column(
@@ -84,7 +87,7 @@ class _ShowEventState extends State<ShowEvent> {
                             'Organized By',
                             style: labelTextStyle,
                           ),
-                          organizer(eventData.organizerId),
+                          organizer(eventData.organizerName),
                           Divider(
                             color: Colors.black,
                             height: 20,
@@ -170,6 +173,9 @@ class _ShowEventState extends State<ShowEvent> {
   }
 
   Widget description(description) {
+    if (description == null || description == "") {
+      return Container();
+    }
     return AutoSizeText(
       description,
       minFontSize: 15,
@@ -178,7 +184,28 @@ class _ShowEventState extends State<ShowEvent> {
     );
   }
 
-  Widget bookmark(contexta) {
+  checkBookmark() async {
+    String _valueOfId = await secureStorage.read(key: 'id');
+    String _token = await secureStorage.read(key: 'token');
+    int _id = int.parse(_valueOfId);
+    Map<String, dynamic> data = {'user_id': _id, 'event_id': widget.eventId};
+    var response =
+        await req.authPostRequest(data, '/users/$_id/bookmarkCheck', _token);
+    var result = json.decode(response);
+    print(result['success']);
+    if (result['success']) {
+      setState(() {
+        pressed = true;
+      });
+    } else {
+      setState(() {
+        pressed = false;
+      });
+    }
+  }
+
+  Widget bookmark(context) {
+    checkBookmark();
     return FlatButton(
       child: pressed
           ? Icon(
@@ -193,19 +220,65 @@ class _ShowEventState extends State<ShowEvent> {
         String _valueOfId = await secureStorage.read(key: 'id');
         String _token = await secureStorage.read(key: 'token');
         int _id = int.parse(_valueOfId);
+        Map<String, dynamic> data = {
+          'user_id': _id,
+          'event_id': widget.eventId
+        };
         if (pressed) {
-          Map<String, dynamic> data = {
-            'user_id': _id,
-            'event_id': widget.eventId
-          };
+          setState(() {
+            pressed = !pressed;
+          });
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Colors.grey[300],
+                  title: Text(
+                    "Bookmarked.",
+                    style: labelTextSmallStyle,
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'OK.',
+                        style: labelTextSmallStyle,
+                      ),
+                    )
+                  ],
+                );
+              });
           req.authPostRequest(data, '/users/$_id/bookmark', _token);
         } else {
-          req.delRequest('/users/$_id/bookmark', _token);
+          setState(() {
+            pressed = !pressed;
+          });
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Colors.grey[300],
+                  title: Text(
+                    "Removed From Bookmark.",
+                    style: labelTextSmallStyle,
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'OK.',
+                        style: labelTextSmallStyle,
+                      ),
+                    )
+                  ],
+                );
+              });
+          req.authPostRequest(data, '/bookmark/delete', _token);
         }
-
-        setState(() {
-          pressed = !pressed;
-        });
       },
     );
   }
@@ -335,31 +408,16 @@ class _ShowEventState extends State<ShowEvent> {
     );
   }
 
-  Widget organizer(int organizerId) {
-    return FutureBuilder(
-        future: widget._auth.getOrganizerProfile(organizerId),
-        builder: (context, AsyncSnapshot<OrganizerModel> snapshot) {
-          if (snapshot.hasData) {
-            OrganizerModel organizer = snapshot.data;
-            return Text(
-              organizer.name,
-              style: titleText,
-            );
-          } else {
-            return Shimmer.fromColors(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              baseColor: Colors.grey[300],
-              highlightColor: Colors.white,
-            );
-          }
-        });
+  Widget organizer(String organizerName) {
+    if (organizerName == null || organizerName == "") {
+      return Container();
+    }
+    return AutoSizeText(
+      organizerName,
+      minFontSize: 15,
+      maxLines: 10,
+      style: titleText,
+    );
   }
 
   String _buildTime(String dateTime) {

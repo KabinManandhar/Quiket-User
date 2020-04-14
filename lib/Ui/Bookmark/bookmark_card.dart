@@ -25,14 +25,12 @@ class _BookmarkCardState extends State<BookmarkCard>
             ),
           );
         }
-        return Refresh(
-          child: ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, int index) {
-                bloc.getEvent(snapshot.data[index]);
-                return BookmarkList(eventId: snapshot.data[index]);
-              }),
-        );
+        return ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, int index) {
+              bloc.getEvent(snapshot.data[index]);
+              return BookmarkList(eventId: snapshot.data[index]);
+            });
       },
     );
   }
