@@ -148,19 +148,17 @@ class _ShowEventState extends State<ShowEvent> {
   }
 
   Widget eventPicture(picture) {
+    if (picture == null) {
+      return Icon(
+        MaterialIcons.event,
+        size: 70,
+        color: Colors.grey,
+      );
+    }
     return Image.network(
-              "http://192.168.100.70:8000" + picture,
-              fit: BoxFit.cover,
-            ) ==
-            null
-        ? Icon(
-            MaterialIcons.event,
-            size: 70,
-          )
-        : Image.network(
-            "http://192.168.100.70:8000" + picture,
-            fit: BoxFit.cover,
-          );
+      "http://192.168.100.70:8000" + picture,
+      fit: BoxFit.cover,
+    );
   }
 
   Widget name(name) {
@@ -192,7 +190,6 @@ class _ShowEventState extends State<ShowEvent> {
     var response =
         await req.authPostRequest(data, '/users/$_id/bookmarkCheck', _token);
     var result = json.decode(response);
-    print(result['success']);
     if (result['success']) {
       setState(() {
         pressed = true;
@@ -250,7 +247,9 @@ class _ShowEventState extends State<ShowEvent> {
                   ],
                 );
               });
-          req.authPostRequest(data, '/users/$_id/bookmark', _token);
+          var response =
+              req.authPostRequest(data, '/users/$_id/bookmark', _token);
+          var result = json.decode(response);
         } else {
           setState(() {
             pressed = !pressed;

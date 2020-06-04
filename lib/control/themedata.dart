@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testawwpp/control/style.dart';
+
+import 'style.dart';
 
 ThemeData themedata() {
   return ThemeData(

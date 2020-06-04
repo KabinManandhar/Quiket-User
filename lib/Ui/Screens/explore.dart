@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testawwpp/Ui/Event/event_card.dart';
+
+import '../Event/event_card.dart';
 
 class HomeScreen extends StatefulWidget {
   final id;

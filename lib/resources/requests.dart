@@ -1,5 +1,6 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 class Requests {
   final _url = "http://192.168.100.70:8000/api"; //instantiate the root url
@@ -10,7 +11,6 @@ class Requests {
           body: jsonEncode(data), headers: _setHeaders());
       return response.body;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -22,7 +22,6 @@ class Requests {
           body: jsonEncode(data), headers: _setAuthHeaders(token));
       return response.body;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -30,13 +29,11 @@ class Requests {
   getRequest(apiUrl) async {
     try {
       final fullUrl = _url + apiUrl;
-
       final http.Response response =
           await http.get(fullUrl, headers: _setHeaders());
 
       return response;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -44,12 +41,10 @@ class Requests {
   authGetRequest(apiUrl, token) async {
     try {
       final fullUrl = _url + apiUrl;
-      print(fullUrl);
       final http.Response response =
           await http.get(fullUrl, headers: _setAuthHeaders(token));
       return response;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -68,7 +63,6 @@ class Requests {
           body: jsonEncode(data), headers: _setAuthHeaders(token));
       return response.body;
     } catch (e) {
-      print(e);
       return null;
     }
   }

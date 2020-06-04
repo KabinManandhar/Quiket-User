@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'package:testawwpp/models/event_model.dart';
-import 'package:testawwpp/resources/secureStorage.dart';
 
+import '../models/event_model.dart';
 import 'requests.dart';
 
 class EventApiProvider {
@@ -15,7 +14,6 @@ class EventApiProvider {
       final ids = json.decode(response.body);
       return ids.cast<int>();
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -26,7 +24,6 @@ class EventApiProvider {
       final ids = json.decode(response.body);
       return ids.cast<int>();
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -37,7 +34,6 @@ class EventApiProvider {
       final event = json.decode(response.body);
       return EventModel.fromJson(event);
     } catch (e) {
-      print(e);
       return null;
     }
   }

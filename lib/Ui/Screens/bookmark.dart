@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testawwpp/Ui/Bookmark/bookmark_card.dart';
+
+import '../Bookmark/bookmark_card.dart';
 
 class BookmarkScreen extends StatelessWidget {
   @override

@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'package:testawwpp/models/event_model.dart';
-import 'package:testawwpp/models/ticket_model.dart';
-import 'package:testawwpp/resources/secureStorage.dart';
 
+import '../models/ticket_model.dart';
 import 'requests.dart';
+import 'secureStorage.dart';
 
 class TicketApiProvider {
   final _evtUrl = '/events';
@@ -17,7 +16,6 @@ class TicketApiProvider {
       final ids = json.decode(response.body);
       return ids.cast<int>();
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -28,7 +26,6 @@ class TicketApiProvider {
       final ticket = json.decode(response.body);
       return TicketModel.fromJson(ticket);
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -36,8 +33,6 @@ class TicketApiProvider {
   deleteTicket() {}
 
   createTicket(Map<String, dynamic> data) async {
-    print(data);
-    print('testAT2');
     _token = await secureStorage.read(key: 'token');
     var response =
         await req.authPostRequest(data, _orgUrl + _evtUrl + _tickUrl, _token);

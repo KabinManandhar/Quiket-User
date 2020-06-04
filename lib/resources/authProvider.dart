@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:testawwpp/models/organizer_model.dart';
-import 'package:testawwpp/resources/secureStorage.dart';
+
+import '../models/user_model.dart';
 import 'requests.dart';
 
 class AuthProvider {
@@ -10,7 +10,7 @@ class AuthProvider {
   final _register = "/user/register";
   final _login = "/user/login";
   final _logout = "/user/logout/";
-  final _getProfile = "/organizers/";
+  final _getProfile = "/users/";
 
   login(String email, String password) async {
     Map<String, String> data = {'email': email, 'password': password};
@@ -29,19 +29,32 @@ class AuthProvider {
     return response;
   }
 
+  update(String name, String password, String phoneNo, String description,
+      String email, String picture, String token, int id) async {
+    Map<String, String> data = {
+      'name': name,
+      'email': email,
+      'password': password,
+      'phone_no': phoneNo,
+      'description': description,
+      'picture': picture
+    };
+    var response = await req.putRequest(data, _getProfile + '$id', token);
+    return response;
+  }
+
   logout(id, token) async {
     var data;
     var response = await req.authPostRequest(data, _logout + '$id', token);
     return response;
   }
 
-  Future<OrganizerModel> getOrganizerProfile(_id) async {
+  Future<UserModel> getUserProfile(_id) async {
     try {
       final response = await req.getRequest(_getProfile + '$_id');
       final organizer = json.decode(response.body);
-      return OrganizerModel.fromJson(organizer);
+      return UserModel.fromJson(organizer);
     } catch (e) {
-      print(e);
       return null;
     }
   }

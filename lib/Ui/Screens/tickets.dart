@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:testawwpp/Ui/Order/order_card.dart';
-import 'package:testawwpp/widgets/softButton.dart';
+
+import '../Order/order_card.dart';
 
 class TicketScreen extends StatefulWidget {
   final userId;
@@ -24,20 +23,6 @@ class _TicketScreenState extends State<TicketScreen> {
           elevation: 0,
         ),
         preferredSize: Size.fromHeight(100),
-      ),
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 20, left: 25),
-        alignment: Alignment.bottomRight,
-        child: SoftButton(
-          onClick: () {
-            Navigator.pushNamed(context, "/createTicket/${widget.userId}");
-          },
-          height: 70,
-          width: 70,
-          iconSize: 30,
-          icon: MaterialIcons.add,
-          mainAxisAlignment: MainAxisAlignment.end,
-        ),
       ),
       body: Container(
           height: MediaQuery.of(context).size.height - 250, child: OrderCard()),

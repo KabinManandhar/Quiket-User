@@ -1,6 +1,7 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:testawwpp/models/ticket_model.dart';
-import 'package:testawwpp/resources/TicketApiProvider.dart';
+
+import '../../../models/ticket_model.dart';
+import '../../../resources/TicketApiProvider.dart';
 
 class GetTicketBloc {
   final _ticketProvider = TicketApiProvider();

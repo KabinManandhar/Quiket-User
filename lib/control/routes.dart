@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:testawwpp/Ui/Event/showEvent.dart';
-import 'package:testawwpp/Ui/Screens/navigation_screen.dart';
-import 'package:testawwpp/Ui/Screens/tickets.dart';
-import 'package:testawwpp/Ui/Ticket/ticket_screen.dart';
-import 'package:testawwpp/Ui/credentials/login_screen.dart';
-import 'package:testawwpp/Ui/credentials/register_screen.dart';
-import 'package:testawwpp/Ui/credentials/splash_screen.dart';
+
+import '../Ui/Event/showEvent.dart';
+import '../Ui/Profile/profile.dart';
+import '../Ui/Profile/update_profile.dart';
+import '../Ui/Screens/navigation_screen.dart';
+import '../Ui/Ticket/ticket_screen.dart';
+import '../Ui/credentials/login_screen.dart';
+import '../Ui/credentials/register_screen.dart';
+import '../Ui/credentials/splash_screen.dart';
 
 const String homeRoute = '/home';
 const String registerRoute = '/register';
@@ -41,6 +43,20 @@ MaterialPageRoute routes(RouteSettings settings) {
           int eventId = int.parse(value);
           return ShowEvent(
             eventId: eventId,
+          );
+        }
+        if (routing.startsWith('/showProfile/')) {
+          var value = routing.replaceFirst('/showProfile/', '');
+          int userId = int.parse(value);
+          return ProfileScreen(
+            userId: userId,
+          );
+        }
+        if (routing.startsWith('/updateProfile/')) {
+          var value = routing.replaceFirst('/updateProfile/', '');
+          int userId = int.parse(value);
+          return UpdateProfileScreen(
+            userId: userId,
           );
         }
         if (routing.startsWith('/showTicket/')) {

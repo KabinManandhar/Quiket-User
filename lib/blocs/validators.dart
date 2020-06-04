@@ -41,7 +41,7 @@ class Validators {
 
   final validatePhoneNo = StreamTransformer<String, String>.fromHandlers(
       handleData: (phoneNo, sink) {
-    if (phoneNo.length >= 10) {
+    if (phoneNo.length == 10) {
       sink.add(phoneNo);
     } else {
       sink.addError('Please enter your Phone No.');

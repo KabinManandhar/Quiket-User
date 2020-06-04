@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:testawwpp/blocs/getBlocs/Ticket/getTicketBlocProvider.dart';
-import 'package:testawwpp/resources/secureStorage.dart';
-import 'package:testawwpp/widgets/refresh.dart';
 
+import '../../blocs/getBlocs/Ticket/getTicketBlocProvider.dart';
+import '../../resources/secureStorage.dart';
+import '../../widgets/refresh.dart';
 import 'ticket_list.dart';
 
 class TicketCard extends StatefulWidget {

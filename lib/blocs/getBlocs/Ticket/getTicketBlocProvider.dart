@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'getTicketBloc.dart';
+
 export 'getTicketBloc.dart';
 
 class GetTicketBlocProvider extends InheritedWidget {

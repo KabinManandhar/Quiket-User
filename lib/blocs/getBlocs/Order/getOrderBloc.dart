@@ -1,7 +1,7 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:testawwpp/models/order_model.dart';
 
-import 'package:testawwpp/resources/OrderApiProvider.dart';
+import '../../../models/order_model.dart';
+import '../../../resources/OrderApiProvider.dart';
 
 class GetOrderBloc {
   final _orderProvider = OrderApiProvider();

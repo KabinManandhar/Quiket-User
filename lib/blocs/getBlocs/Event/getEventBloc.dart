@@ -1,6 +1,7 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:testawwpp/models/event_model.dart';
-import 'package:testawwpp/resources/EventApiProvider.dart';
+
+import '../../../models/event_model.dart';
+import '../../../resources/EventApiProvider.dart';
 
 class GetEventBloc {
   final _eventProvider = EventApiProvider();

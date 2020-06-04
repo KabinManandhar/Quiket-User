@@ -3,10 +3,10 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:testawwpp/control/routes.dart';
-import 'package:testawwpp/control/style.dart';
-import 'package:testawwpp/widgets/softButton.dart';
-import 'package:testawwpp/blocs/postBlocs/credentials/credentialBloc.dart';
+import '../../blocs/postBlocs/credentials/credentialBloc.dart';
+import '../../control/routes.dart';
+import '../../control/style.dart';
+import '../../widgets/softButton.dart';
 
 final FocusNode focusName = FocusNode();
 final FocusNode focusPhoneNo = FocusNode();
@@ -100,7 +100,7 @@ Widget phoneNoField(CredentialsBloc bloc) {
                   border: UnderlineInputBorder(),
                   labelStyle:
                       TextStyle(color: Colors.grey, fontFamily: fontName),
-                  labelText: "Phone Number")),
+                  labelText: "Phone Number(+977)")),
         );
       });
 }
@@ -173,6 +173,7 @@ Widget registerButton(CredentialsBloc bloc) {
               bool check = await bloc.register();
               if (check) {
                 Navigator.pop(context);
+                bloc.removeValues();
                 Navigator.pushReplacementNamed(context, loginRoute);
               } else if (check) {
                 Scaffold.of(context).showSnackBar(SnackBar(
@@ -188,7 +189,7 @@ Widget registerButton(CredentialsBloc bloc) {
                   SnackBar(
                     duration: Duration(seconds: 3),
                     content: Text(
-                      "Sorry,but system failed. Please try again.",
+                      "Sorry,but system failed. Please Try Again.",
                       style: labelTextSmallStyle,
                     ),
                   ),

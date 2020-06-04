@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:testawwpp/widgets/softContainer.dart';
+
+import 'softContainer.dart';
 
 class LoadingContainer extends StatelessWidget {
   Widget build(context) {
@@ -27,9 +28,7 @@ Widget buildContainer(BuildContext context) {
             height: 20.0,
           ),
           SoftContainer(
-            onClick: () {
-              print('wassup');
-            },
+            onClick: () {},
             height: 230,
             width: MediaQuery.of(context).size.width - 70,
           ),

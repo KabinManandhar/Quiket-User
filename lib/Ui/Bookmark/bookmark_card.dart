@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:testawwpp/Ui/Bookmark/bookmark_list.dart';
-import 'package:testawwpp/blocs/getBlocs/Event/getEventBlocProvider.dart';
-import 'package:testawwpp/widgets/refresh.dart';
+
+import '../../blocs/getBlocs/Event/getEventBlocProvider.dart';
+import 'bookmark_list.dart';
 
 class BookmarkCard extends StatefulWidget {
   @override

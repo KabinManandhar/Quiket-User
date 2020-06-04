@@ -15,7 +15,7 @@ class _SplashScreenQuiketState extends State<SplashScreenQuiket> {
   void initState() {
     super.initState();
 
-    // secureStorage.deleteAll();
+    //secureStorage.deleteAll();
 
     Timer(Duration(seconds: 1), () async {
       Navigator.pushReplacementNamed(context, navigationRoute);

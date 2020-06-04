@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:testawwpp/resources/secureStorage.dart';
-
-import 'package:testawwpp/blocs/validators.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:testawwpp/resources/authProvider.dart';
+
+import '../../../resources/authProvider.dart';
+import '../../../resources/secureStorage.dart';
+import '../../validators.dart';
 
 class CredentialsBloc extends Object with Validators {
   final _auth = AuthProvider();
@@ -27,20 +27,21 @@ class CredentialsBloc extends Object with Validators {
       Rx.combineLatest2(email, password, (e, p) => true);
   Stream<bool> get registerValid =>
       Rx.combineLatest4(email, password, name, phoneNo, (e, p, n, ph) => true);
+  Stream<bool> get updateValid => email.map((email) => true);
 
   // Change data
   Function(String) get changeEmail => _email.sink.add;
   Function(String) get changePassword => _password.sink.add;
   Function(String) get changeName => _name.sink.add;
   Function(String) get changePhoneNo => _phoneNo.sink.add;
+  Function(String) get changeDescription => _description.sink.add;
+  Function(String) get changePicture => _picture.sink.add;
 
   login() async {
     String validEmail = _email.value;
     String validPassword = _password.value;
     var jsonResponse = await _auth.login(validEmail, validPassword);
     var results = json.decode(jsonResponse);
-    print(results);
-
     if (results['success']) {
       secureStorage.deleteAll();
       secureStorage.write(key: 'id', value: results['id'].toString());
@@ -76,7 +77,36 @@ class CredentialsBloc extends Object with Validators {
     }
   }
 
-  update() {}
+  update(id, user) async {
+    var validPassword = _password.value;
+    var validName = _name.value;
+    var validPhoneNo = _phoneNo.value;
+    var validDescription = _description.value;
+    var validEmail = _email.value;
+    var validPicture = _picture.value;
+    if (validName == '' || validName == null) {
+      validName = user.name;
+    }
+    if (validDescription == '' || validDescription == null) {
+      validDescription = user.description;
+    }
+    if (validPhoneNo == '' || validPhoneNo == null) {
+      validPhoneNo = user.phoneNo;
+    }
+
+    String token = await secureStorage.read(key: 'token');
+
+    var jsonResponse = await _auth.update(validName, validPassword,
+        validPhoneNo, validDescription, validEmail, validPicture, token, id);
+
+    var results = json.decode(jsonResponse);
+
+    if (results['success']) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   removeValues() {
     _email.value = '';

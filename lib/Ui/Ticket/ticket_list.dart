@@ -4,10 +4,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:random_string/random_string.dart';
-import 'package:testawwpp/control/routes.dart';
 
 import '../../blocs/getBlocs/Ticket/getTicketBlocProvider.dart';
+import '../../control/routes.dart';
 import '../../control/style.dart';
 import '../../models/ticket_model.dart';
 import '../../resources/requests.dart';
@@ -140,6 +141,22 @@ class _TicketListState extends State<TicketList> {
                           : SoftText(
                               label: 'Buy',
                               onClick: () async {
+                                showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: Container(
+                                        height: 60,
+                                        width: 60,
+                                        child: SpinKitChasingDots(
+                                          color: Colors.grey[700],
+                                          size: 50.0,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
                                 for (int i = 1;
                                     i <= widget._value.toInt();
                                     i++) {
@@ -151,15 +168,38 @@ class _TicketListState extends State<TicketList> {
                                   };
                                   var response = await req.authPostRequest(
                                       data,
-                                      '/user/${widget.token}/order',
+                                      '/users/${widget.userId}/orders',
                                       widget.token);
                                   var result = json.decode(response);
+
                                   setState(() {
                                     widget.result = result['success'];
                                   });
                                 }
-
+                                Navigator.pop(context);
                                 if (widget.result) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.grey[300],
+                                          title: Text(
+                                            "Ticket Successfully Purchased. Enjoy your Time.",
+                                            style: labelTextSmallStyle,
+                                          ),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                'Thanks!',
+                                                style: labelTextSmallStyle,
+                                              ),
+                                            )
+                                          ],
+                                        );
+                                      });
                                 } else {
                                   showDialog(
                                       context: context,
