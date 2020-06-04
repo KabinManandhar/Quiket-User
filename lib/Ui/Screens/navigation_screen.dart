@@ -62,7 +62,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   Widget changeScreen(GetEventBloc bloc, GetOrderBloc orderBloc, int screen) {
     if (screen == 0) {
-      return SearchScreen();
+      if (widget._token == null && widget._id == null) {
+        return LoginScreen();
+      } else {
+        return SearchScreen();
+      }
     } else if (screen == 1) {
       if (widget._token == null && widget._id == null) {
         return LoginScreen();

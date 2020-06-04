@@ -83,7 +83,7 @@ class _OrderListState extends State<OrderList> {
             height: 10,
             width: 10,
             decoration: BoxDecoration(
-              color: order.status == 0 ? Colors.green : Colors.grey,
+              color: order.status == 1 ? Colors.green : Colors.grey,
               borderRadius: BorderRadius.circular(12),
             ),
           ),
