@@ -95,8 +95,12 @@ class _ShowEventState extends State<ShowEvent> {
                           SizedBox(
                             height: 10,
                           ),
-                          startDateTime(eventData.startDatetime, eventData.name,
-                              eventData.venue, eventData.endDatetime),
+                          startDateTime(
+                              eventData.startDatetime,
+                              eventData.name,
+                              eventData.venue,
+                              eventData.description,
+                              eventData.endDatetime),
                           SizedBox(
                             height: 10,
                           ),
@@ -282,7 +286,8 @@ class _ShowEventState extends State<ShowEvent> {
     );
   }
 
-  Widget startDateTime(String dateTime, String name, String venue, String end) {
+  Widget startDateTime(String dateTime, String name, String venue,
+      String description, String end) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -331,9 +336,9 @@ class _ShowEventState extends State<ShowEvent> {
             fontSize: 20,
             onClick: () {
               final Event event = Event(
-                title: 'Event title',
-                description: 'Event description',
-                location: 'Event location',
+                title: name,
+                description: description,
+                location: venue,
                 startDate: DateTime.parse(dateTime),
                 endDate: DateTime.parse(end),
               );
